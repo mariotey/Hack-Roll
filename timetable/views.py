@@ -84,3 +84,77 @@ def register(request):
 @login_required  # Add the login_required decorator to ensure the user is authenticated
 def menu(request):
     return render(request, "timetable/menu.html")
+
+@login_required
+def bot(request):
+    scam_info = {
+        "info": "Phishing scams are bad"
+    }
+
+    scenario_info = [
+        {"name":"user1", "content": "<insert stuff>"},
+        {"name":"user2", "content": "<insert stuff>"},
+        {"name":"user1", "content": "<insert stuff>"},
+        {"name":"user2", "content": "<insert stuff>"},
+        {"name":"user1", "content": "<insert stuff>"},
+        {"name":"user2", "content": "<insert stuff>"},
+        {"name":"user1", "content": "<insert stuff>"},
+        {"name":"user2", "content": "<insert stuff>"},
+        {"name":"user1", "content": "<insert stuff>"},
+        {"name":"user2", "content": "<insert stuff>"},
+    ]
+
+    question_info = {
+        "question": "How old are you?",
+        "answers": {
+            "option1": "<insert stuff>",
+            "option2": "<insert stuff>",
+            "option3": "<insert stuff>",
+            "option4": "<insert stuff>"
+        },
+        "correct": 1
+    }
+
+    return render(request, "timetable/bot.html", {
+        "scam_info": scam_info,
+        "scenario_info": scenario_info,
+        "question_info": question_info,
+        "user_response": ""
+        "respond_info": {
+            "answer": "",
+            # "answer": "Your answer is correct!",
+        }
+    })
+
+@login_required
+def respond_bot(request):
+    return render(request, "timetable/bot.html", {
+        "scam_info": {
+            "info": "Phishing scams are bad"
+        },
+        "scenario_info": {
+            "scenario": {
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>"
+            }
+        },
+        "question_info": {
+            "question": "How old are you?",
+            "answers": {
+                "option1": "<insert stuff>",
+                "option2": "<insert stuff>",
+                "option3": "<insert stuff>",
+                "option4": "<insert stuff>"
+            },
+            "correct": 1
+        },
+        "respond_info": {
+            "answer": "Your answer is correct!"
+        }
+    })

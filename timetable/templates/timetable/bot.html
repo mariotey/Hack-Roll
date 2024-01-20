@@ -1,0 +1,94 @@
+{% extends "timetable/layout.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div style="display: flex; width: 100%; height: 100vh; justify-content: space-evenly; align-items: center; box-sizing: border-box;">
+    <div style="width: 100%; height: 100vh; box-sizing: border-box;">
+        <div style="width: 100%; height: 50%; border: solid 1px; border-radius:5px; padding: 5px;">
+            <div>
+                Question:
+            </div>
+            <div>
+                {{question_info.question}}
+            </div>
+
+            &nbsp;
+
+            <div>
+                Choices:
+            </div>
+            <ul>
+                {% for option in question_info.answers %}
+                    <li> {{option}}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div style="width: 100%; height: 25%; border: solid 1px; border-radius:5px; padding: 5px;">
+            <div>
+                User Input:
+            </div>
+            <div>
+                <input type="text" placeholder="Type here..." style="width: 100%; height: 4em; margin-bottom: 5px;">
+                <div style = "display: flex; justify-content: center;">
+                    {% if respond_info.answer == "" %}
+                        <button> Enter </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if respond_info.answer != "" %}
+            <div style="width: 100%; height: 25%; border: solid 1px; border-radius: 5px; padding: 5px;">
+                <div>
+                    Response:
+                </div>
+                <div>
+                    <div style="margin: 10px 5px;">
+                        {{ respond_info.answer }}
+                    </div>
+                    <div style = "display: flex; justify-content: center;">
+                        <button>
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div style="width: 100%; height: 100vh; box-sizing: border-box;">
+        <div style="width: 100%; height: 50%; border: solid 1px; border-radius: 5px; padding: 5px; overflow: auto;">
+            <div style="position: sticky; background-color: white; top: 0px;">
+                Scenario:
+            </div>
+            {% for msg in scenario_info %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <div style="background-color: lightblue; padding: 5px; border-radius: 5px; width: fit-content; text-align: left; margin-right: auto;">
+                {% else %}
+                    <div style="background-color: lightgreen; padding: 5px; border-radius: 5px; width: fit-content; text-align: right; margin-left: auto;">
+                {% endif %}
+                    {{ msg.name }}: {{ msg.content }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="width: 100%; height: 50%; border: solid 1px; border-radius:5px; padding: 5px;">
+            <div>
+                Background of Scam:
+            </div>
+            <div>
+                {{scam_info.info}}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var question_info = {{question_info|safe }};
+
+    console.log(question_info);
+</script>
+{% endblock %}s
