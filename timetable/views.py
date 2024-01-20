@@ -140,7 +140,7 @@ def respond(request, scam_type):
             requests.post(f'{BOT_URL}/replyUser',
                             headers={"Content-Type": "application/json"},
                             json = {
-                                "data": scam_type,
+                                "data": user_input,
                                 "context":js_variable_3["answerContext"]
                             }
 
