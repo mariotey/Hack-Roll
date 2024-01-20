@@ -1,0 +1,36 @@
+div.header {
+    display: flex;
+    justify-content: center;
+    margin: 30px 30px 30px 30px;
+}
+
+div.timetable_container{
+    margin: 30px 30px 30px 30px;
+}
+
+div.dayCol {
+    background-color: brown;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    border: solid black 1px;
+    width: 80px;
+}
+
+div.timeblock {
+    width: 80px;
+    border: solid black 1px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px 5px;
+}
+
+div.timeblock > div {
+    box-sizing: border-box;
+    border: solid red 1px;
+    border-radius: 5px;
+    flex-grow: 1;
+    margin-bottom: 5px;
+}
