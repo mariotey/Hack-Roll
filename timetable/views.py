@@ -13,6 +13,7 @@ from .models import User
 from datetime import datetime, timedelta
 import json
 import requests
+import ast
 
 BOT_URL="https://hacknrollllm.onrender.com"
 
@@ -107,12 +108,15 @@ def bot(request, scam_type):
         ).content.decode("utf-8")
     )
 
+    print(quiz_info)
+
     scenario_info = quiz_info["scenario"]
 
     question_info = {
         "question": quiz_info["question"],
         "answers": quiz_info["answers"],
         "correct": quiz_info["correct"],
+        "answerContext": quiz_info["answerContext"],
     }
 
     return render(request, "timetable/bot.html", {
@@ -128,29 +132,30 @@ def respond(request, scam_type):
     if request.method == 'POST':
         # Extract the values from the form
         user_input = request.POST.get('user_input', '')
-        js_variable_1 = request.POST.get('js_variable_1', '').replace("'", '"').replace('\\n', '\n')
-        # js_variable_2 = request.POST.get('js_variable_2', '').replace("'",'"')
-        # js_variable_3 = request.POST.get('js_variable_3', '').replace("'",'"')
+        js_variable_1 = ast.literal_eval(request.POST.get('js_variable_1', ''))
+        js_variable_2 = ast.literal_eval(request.POST.get('js_variable_2', ''))
+        js_variable_3 = ast.literal_eval(request.POST.get('js_variable_3', ''))
 
-        # respond_info = json.loads(
-        #     requests.post(f'{BOT_URL}/getScenarioQnAnswer',
-        #                     headers={"Content-Type": "application/json"},
-        #                     json = {
-        #                         "data": scam_type,
-        #                         "context":js_variable_2["answerContext"]
-        #                     }
+        respond_info = json.loads(
+            requests.post(f'{BOT_URL}/replyUser',
+                            headers={"Content-Type": "application/json"},
+                            json = {
+                                "data": scam_type,
+                                "context":js_variable_3["answerContext"]
+                            }
 
-        #     ).content.decode("utf-8")
-        # )
+            ).content.decode("utf-8")
+        )
+
+        print(respond_info)
 
         data = {
-            "scam_id": scam_type,
+            "scam_type": scam_type,
             "scam_info": js_variable_1,
-            # "scenario_info": js_variable_2,
-            # "question_info": js_variable_3,
-            # "user_response": user_input,
-            # "respond_info": {"answer": respond_info["answer"]}
+            "scenario_info": js_variable_2,
+            "question_info": js_variable_3,
+            "user_response": user_input,
+            "respond_info": respond_info
         }
 
-        return JsonResponse(data)
-        # return render(request, "timetable/bot.html", data)
+        return render(request, "timetable/bot.html", data)
