@@ -12,15 +12,17 @@ from django.db.models import Q
 from .models import User
 from datetime import datetime, timedelta
 import json
+import requests
+
+BOT_URL="https://hacknrollllm.onrender.com"
 
 def index(request):
-    return render(request, "timetable/login.html")
+    return render(request, "timetable/home.html")
 
 #################################################################################################
 
 def login_user(request):
     if request.method == "POST":
-
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -31,7 +33,7 @@ def login_user(request):
             login(request, user)
             print("Login successful")
 
-            return render(request, "timetable/menu.html")
+            return HttpResponseRedirect(reverse("timetable:index"))
         else:
             print("Login unsuccessful")
             return render(request, "timetable/login.html", {
@@ -42,7 +44,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render(request, "timetable/login.html")
+    return HttpResponseRedirect(reverse("timetable:index"))
 
 def register(request):
     print(request)
@@ -66,7 +68,7 @@ def register(request):
 
             login(request, user)
 
-            return render(request, "timetable/menu.html")
+            return HttpResponseRedirect(reverse("timetable:index"))
 
         except IntegrityError:
             return render(request, "timetable/register.html", {
@@ -86,61 +88,69 @@ def menu(request):
     return render(request, "timetable/menu.html")
 
 @login_required
-def bot(request, scam_id):
-    scam_info = {
-        "info": "Phishing scams are bad"
-    }
+def bot(request, scam_type):
+    scam_info = json.loads(
+        requests.post(f'{BOT_URL}/getInfo',
+                        headers={"Content-Type": "application/json"},
+                        json = {
+                            "data": scam_type
+                        }
+        ).content.decode("utf-8")
+    )
 
-    scenario_info = [
-        {"name":"user1", "content": "<insert stuff>"},
-        {"name":"user2", "content": "<insert stuff>"},
-        {"name":"user1", "content": "<insert stuff>"},
-        {"name":"user2", "content": "<insert stuff>"},
-        {"name":"user1", "content": "<insert stuff>"},
-        {"name":"user2", "content": "<insert stuff>"},
-        {"name":"user1", "content": "<insert stuff>"},
-        {"name":"user2", "content": "<insert stuff>"},
-        {"name":"user1", "content": "<insert stuff>"},
-        {"name":"user2", "content": "<insert stuff>"},
-    ]
+    quiz_info = json.loads(
+        requests.post(f'{BOT_URL}/getScenarioQnAnswer',
+                        headers={"Content-Type": "application/json"},
+                        json = {
+                            "data": scam_type
+                        }
+        ).content.decode("utf-8")
+    )
+
+    scenario_info = quiz_info["scenario"]
 
     question_info = {
-        "question": "How old are you?",
-        "answers": {
-            "option1": "<insert stuff>",
-            "option2": "<insert stuff>",
-            "option3": "<insert stuff>",
-            "option4": "<insert stuff>"
-        },
-        "correct": 1
+        "question": quiz_info["question"],
+        "answers": quiz_info["answers"],
+        "correct": quiz_info["correct"],
     }
 
     return render(request, "timetable/bot.html", {
-        "scam_id": scam_id,
+        "scam_type": scam_type,
         "scam_info": scam_info,
         "scenario_info": scenario_info,
         "question_info": question_info,
         "user_response": "",
-        "respond_info": {
-            "answer": "",
-        }
+        "respond_info": {"answer": ""}
     })
 
-def respond(request, scam_id):
-     if request.method == 'POST':
+def respond(request, scam_type):
+    if request.method == 'POST':
         # Extract the values from the form
         user_input = request.POST.get('user_input', '')
-        js_variable_1 = request.POST.get('js_variable_1', '').replace("'", '"')
-        js_variable_2 = request.POST.get('js_variable_2', '').replace("'", '"')
-        js_variable_3 = request.POST.get('js_variable_3', '').replace("'", '"')
+        js_variable_1 = request.POST.get('js_variable_1', '').replace("'", '"').replace('\\n', '\n')
+        # js_variable_2 = request.POST.get('js_variable_2', '').replace("'",'"')
+        # js_variable_3 = request.POST.get('js_variable_3', '').replace("'",'"')
 
-        return render(request, "timetable/bot.html", {
-            "scam_id": scam_id,
-            "scam_info": json.loads(js_variable_1),
-            "scenario_info": json.loads(js_variable_2),
-            "question_info": json.loads(js_variable_3),
-            "user_response": user_input,
-            "respond_info": {
-                "answer": "Your answer is correct!",
-            }
-        })
+        # respond_info = json.loads(
+        #     requests.post(f'{BOT_URL}/getScenarioQnAnswer',
+        #                     headers={"Content-Type": "application/json"},
+        #                     json = {
+        #                         "data": scam_type,
+        #                         "context":js_variable_2["answerContext"]
+        #                     }
+
+        #     ).content.decode("utf-8")
+        # )
+
+        data = {
+            "scam_id": scam_type,
+            "scam_info": js_variable_1,
+            # "scenario_info": js_variable_2,
+            # "question_info": js_variable_3,
+            # "user_response": user_input,
+            # "respond_info": {"answer": respond_info["answer"]}
+        }
+
+        return JsonResponse(data)
+        # return render(request, "timetable/bot.html", data)

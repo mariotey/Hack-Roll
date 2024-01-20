@@ -3,22 +3,22 @@
 {% block body %}
 <div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=1 %}"> Impersonating Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='impersonation' %}"> Impersonating Scam </a>
     </div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=2 %}"> Phishing Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='phishing' %}"> Phishing Scam </a>
     </div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=3 %}"> Job Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='job' %}"> Job Scam </a>
     </div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=4 %}"> Loan Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='loan' %}"> Loan Scam </a>
     </div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=5 %}"> Investment Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='investment' %}"> Investment Scam </a>
     </div>
     <div>
-        <a href="{% url 'timetable:bot' scam_id=6 %}"> Online Purchase Scam </a>
+        <a href="{% url 'timetable:bot' scam_type='online_purchase' %}"> Online Purchase Scam </a>
     </div>
 </div>
 

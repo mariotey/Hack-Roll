@@ -11,6 +11,6 @@ urlpatterns = [
 
     path("menu", views.menu, name="menu"),
 
-    path('bot/<int:scam_id>/', views.bot, name='bot'),
-    path("respond/<int:scam_id>/", views.respond, name="respond")
+    path('bot/<str:scam_type>/', views.bot, name='bot'),
+    path("respond/<str:scam_type>/", views.respond, name="respond"),
 ]

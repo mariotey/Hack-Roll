@@ -1,0 +1,19 @@
+{% extends "timetable/layout.html" %}
+
+{% block body %}
+    <div>
+        {% if user.is_authenticated %}
+            <div>
+                {{ user.username }}
+            </div>
+        {% else %}
+            <a href="{% url 'timetable:login' %}">Login</a>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+        <div>
+            <a href = "{% url 'timetable:menu' %}">Try our bot!</a>
+        </div>
+    {% endif %}
+{% endblock %}
