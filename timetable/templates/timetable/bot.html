@@ -31,7 +31,7 @@
                 User Input:
             </div>
             <div>
-                <form action="{% url 'timetable:respond_bot' %}" method="post">
+                <form action="{% url 'timetable:respond' scam_id=scam_id %}" method="post">
                     {% csrf_token %}
                     <div>
                         <input id="user_input" name = "user_input" type="text" placeholder="Type here..." style="width: 100%; height: 4em; margin-bottom: 5px;">
@@ -58,7 +58,7 @@
                         {{ respond_info.answer }}
                     </div>
                     <div style = "display: flex; justify-content: center;">
-                        <a href="{% url 'timetable:bot' %}">
+                        <a href="{% url 'timetable:bot' scam_id=scam_id %}">
                             <button>
                                 Next
                             </button>

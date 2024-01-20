@@ -8,7 +8,9 @@ urlpatterns = [
     path("login", views.login_user, name="login"),
     path("logout", views.logout_user, name="logout"),
     path("register", views.register, name="register"),
+
     path("menu", views.menu, name="menu"),
-    path("bot", views.bot, name="bot"),
-    path("respond_bot", views.respond_bot, name="respond_bot")
+
+    path('bot/<int:scam_id>/', views.bot, name='bot'),
+    path("respond/<int:scam_id>/", views.respond, name="respond")
 ]

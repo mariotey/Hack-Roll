@@ -2,6 +2,24 @@
 
 {% block body %}
 <div>
-    Menu Page
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=1 %}"> Impersonating Scam </a>
+    </div>
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=2 %}"> Phishing Scam </a>
+    </div>
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=3 %}"> Job Scam </a>
+    </div>
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=4 %}"> Loan Scam </a>
+    </div>
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=5 %}"> Investment Scam </a>
+    </div>
+    <div>
+        <a href="{% url 'timetable:bot' scam_id=6 %}"> Online Purchase Scam </a>
+    </div>
 </div>
+
 {% endblock %}

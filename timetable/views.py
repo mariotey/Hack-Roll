@@ -86,7 +86,7 @@ def menu(request):
     return render(request, "timetable/menu.html")
 
 @login_required
-def bot(request):
+def bot(request, scam_id):
     scam_info = {
         "info": "Phishing scams are bad"
     }
@@ -116,6 +116,7 @@ def bot(request):
     }
 
     return render(request, "timetable/bot.html", {
+        "scam_id": scam_id,
         "scam_info": scam_info,
         "scenario_info": scenario_info,
         "question_info": question_info,
@@ -125,7 +126,7 @@ def bot(request):
         }
     })
 
-def respond_bot(request):
+def respond(request, scam_id):
      if request.method == 'POST':
         # Extract the values from the form
         user_input = request.POST.get('user_input', '')
@@ -133,7 +134,8 @@ def respond_bot(request):
         js_variable_2 = request.POST.get('js_variable_2', '').replace("'", '"')
         js_variable_3 = request.POST.get('js_variable_3', '').replace("'", '"')
 
-        data = {
+        return render(request, "timetable/bot.html", {
+            "scam_id": scam_id,
             "scam_info": json.loads(js_variable_1),
             "scenario_info": json.loads(js_variable_2),
             "question_info": json.loads(js_variable_3),
@@ -141,8 +143,4 @@ def respond_bot(request):
             "respond_info": {
                 "answer": "Your answer is correct!",
             }
-        }
-
-        # return JsonResponse(data)
-
-        return render(request, "timetable/bot.html", data)
+        })
