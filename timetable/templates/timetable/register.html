@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "timetable/layout.html" %}
 
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-</head>
-
-<body>
+{% block body %}
     <h2>Register</h2>
     {% if message %}
     <div>{{ message }}</div>
@@ -31,6 +22,4 @@
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
     Already have an account? <a href="{% url 'timetable:index' %}">Log In here.</a>
-</body>
-
-</html>
+{% endblock %}
