@@ -31,12 +31,20 @@
                 User Input:
             </div>
             <div>
-                <input type="text" placeholder="Type here..." style="width: 100%; height: 4em; margin-bottom: 5px;">
-                <div style = "display: flex; justify-content: center;">
-                    {% if respond_info.answer == "" %}
-                        <button> Enter </button>
-                    {% endif %}
-                </div>
+                <form action="{% url 'timetable:respond_bot' %}" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <input id="user_input" name = "user_input" type="text" placeholder="Type here..." style="width: 100%; height: 4em; margin-bottom: 5px;">
+                        <input type="hidden" id="js_variable_1" name="js_variable_1" value="{{ scam_info }}">
+                        <input type="hidden" id="js_variable_2" name="js_variable_2" value="{{ scenario_info }}">
+                        <input type="hidden" id="js_variable_3" name="js_variable_3" value="{{ question_info }}">
+                    </div>
+                    <div style = "display: flex; justify-content: center;">
+                        {% if respond_info.answer == "" %}
+                            <input type="submit" value="Enter">
+                        {% endif %}
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -86,9 +94,4 @@
     </div>
 </div>
 
-<script>
-    var question_info = {{question_info|safe }};
-
-    console.log(question_info);
-</script>
 {% endblock %}s
