@@ -5,6 +5,9 @@ app_name = "timetable"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("homefalse", views.home_false, name="homefalse"),
+    path("hometrue", views.home_true, name="hometrue"),
+
     path("login", views.login_user, name="login"),
     path("logout", views.logout_user, name="logout"),
     path("register", views.register, name="register"),

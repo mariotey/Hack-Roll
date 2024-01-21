@@ -15,7 +15,13 @@ import ast
 BOT_URL="https://hacknrollllm.onrender.com"
 
 def index(request):
-    return render(request, "timetable/home.html")
+    return render(request, "timetable/home_false.html")
+
+def home_false(request):
+    return render(request, "timetable/home_false.html")
+
+def home_true(request):
+    return render(request, "timetable/home_true.html")
 
 #################################################################################################
 
@@ -31,7 +37,7 @@ def login_user(request):
             login(request, user)
             print("Login successful")
 
-            return HttpResponseRedirect(reverse("timetable:index"))
+            return render(request, "timetable/home_true.html")
         else:
             print("Login unsuccessful")
             return render(request, "timetable/login.html", {
@@ -42,7 +48,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect(reverse("timetable:index"))
+    return render(request, "timetable/home_false.html")
 
 def register(request):
     print(request)
@@ -66,7 +72,7 @@ def register(request):
 
             login(request, user)
 
-            return HttpResponseRedirect(reverse("timetable:index"))
+            return render(request, "timetable/home_true.html")
 
         except IntegrityError:
             return render(request, "timetable/register.html", {
