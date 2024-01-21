@@ -1,0 +1,51 @@
+{
+    "info": "Phishing scams are bad"
+}
+
+{
+    "scenario": {
+        "user1": "<insert stuff>",
+        "user2": "<insert stuff>",
+        "user1": "<insert stuff>",
+        "user2": "<insert stuff>",
+        "user1": "<insert stuff>",
+        "user2": "<insert stuff>",
+        "user1": "<insert stuff>",
+        "user2": "<insert stuff>"
+    },
+    "question": "How old are you?",
+    "answers": {
+        "option1": "<insert stuff>",
+        "option2": "<insert stuff>",
+        "option3": "<insert stuff>",
+        "option4": "<insert stuff>"
+    },
+    "correct": 1,
+    "answerContext": "text"
+}
+
+{
+    "answer": "Your answer is correct!"
+}
+
+
+response_data = {
+            "scenario": {
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>",
+                "user1": "<insert stuff>",
+                "user2": "<insert stuff>"
+            },
+            "question": "How old are you?",
+            "answers": {
+                "option1": "<insert stuff>",
+                "option2": "<insert stuff>",
+                "option3": "<insert stuff>",
+                "option4": "<insert stuff>"
+            },
+            "correct": 1
+        }

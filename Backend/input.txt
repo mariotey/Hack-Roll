@@ -1,0 +1,42 @@
+first endpoint
+
+{"data":"impersonation"}
+
+must be in list scam_types = {
+    'impersonation': impersonation_scam,
+    'phishing': phishing_scam,
+    'job': job_scam,
+    'loan': loan_scam,
+    'investment': investment_scam,
+    'online_purchase': online_purchase_scam
+}
+
+second endpoint
+
+{"data":"impersonation"}
+
+
+def parse_scenario(self,input_str):
+        pattern = r'Start\n(.*?)\nQuestion: (.+?)\nOptions:\n(.+?)\nCorrect Option: (.+?)\nEnd'
+        match = re.search(pattern, input_str, re.DOTALL)
+        try:
+            if match:
+                users_data = match.group(1).strip().split('\n')
+                users_dict = {f"user{i+1}": data.strip() for i, data in enumerate(users_data)}
+                question = match.group(2)
+                options = match.group(3).split('\n')
+                correct_option = match.group(4)
+                answers_dict = {f"option{i+1}": option.strip() for i, option in enumerate(options)}
+                return {
+                    "scenario": {
+                        **users_dict,
+                    },
+                    "question": question,
+                    "answers": answers_dict,
+                    "correct": (correct_option)
+                }
+            else:
+                return 0
+        except:
+            print("error")
+            return 0
