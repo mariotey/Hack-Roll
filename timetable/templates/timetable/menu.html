@@ -1,25 +1,62 @@
 {% extends "timetable/layout.html" %}
 
-{% block body %}
-<div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='impersonation' %}"> Impersonating Scam </a>
-    </div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='phishing' %}"> Phishing Scam </a>
-    </div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='job' %}"> Job Scam </a>
-    </div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='loan' %}"> Loan Scam </a>
-    </div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='investment' %}"> Investment Scam </a>
-    </div>
-    <div>
-        <a href="{% url 'timetable:bot' scam_type='online_purchase' %}"> Online Purchase Scam </a>
-    </div>
-</div>
+{% block head %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
+        #scamLinks {
+            text-align: center;
+        }
+
+        #scamLinks div {
+            margin: 10px;
+            padding: 15px;
+            background-color: #3498db;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        #scamLinks a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #scamLinks a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="scamLinks">
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='impersonation' %}">Impersonating Scam</a>
+        </div>
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='phishing' %}">Phishing Scam</a>
+        </div>
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='job' %}">Job Scam</a>
+        </div>
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='loan' %}">Loan Scam</a>
+        </div>
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='investment' %}">Investment Scam</a>
+        </div>
+        <div>
+            <a href="{% url 'timetable:bot' scam_type='online_purchase' %}">Online Purchase Scam</a>
+        </div>
+    </div>
 {% endblock %}
