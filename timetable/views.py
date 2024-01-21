@@ -6,11 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils import timezone
-from django.db.models import Q
 
 from .models import User
-from datetime import datetime, timedelta
 import json
 import requests
 import ast
@@ -99,18 +96,27 @@ def bot(request, scam_type):
         ).content.decode("utf-8")
     )
 
-    quiz_info = json.loads(
-        requests.post(f'{BOT_URL}/getScenarioQnAnswer',
-                        headers={"Content-Type": "application/json"},
-                        json = {
-                            "data": scam_type
-                        }
-        ).content.decode("utf-8")
-    )
+    linkValid = True
+    while linkValid:
+        quiz_info = json.loads(
+            requests.post(f'{BOT_URL}/getScenarioQnAnswer',
+                            headers={"Content-Type": "application/json"},
+                            json = {
+                                "data": scam_type
+                            }
+            ).content.decode("utf-8")
+        )
 
-    print(quiz_info)
+        print(quiz_info,"\n")
+
+        if "error" in quiz_info.keys():
+            linkValid = True
+        else:
+            linkValid = False
 
     scenario_info = quiz_info["scenario"]
+
+
 
     question_info = {
         "question": quiz_info["question"],
