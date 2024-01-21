@@ -1,19 +1,77 @@
 {% extends "timetable/layout.html" %}
+{% block head %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
 
+        #userGreeting {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #userGreeting div {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        #userGreeting a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        #userGreeting a:hover {
+            text-decoration: underline;
+        }
+
+        #botLink {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #botLink a {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        #botLink a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    <div>
+    <div id="userGreeting">
         {% if user.is_authenticated %}
             <div>
-                {{ user.username }}
+                Welcome, {{ user.username }}!
             </div>
         {% else %}
-            <a href="{% url 'timetable:login' %}">Login</a>
+            <div>
+                <a href="{% url 'timetable:login' %}" style="color:white;">Login</a>
+            </div>
         {% endif %}
     </div>
 
     {% if user.is_authenticated %}
-        <div>
-            <a href = "{% url 'timetable:menu' %}">Try our bot!</a>
+        <div id="botLink">
+            <a href="{% url 'timetable:menu' %}">Try our bot!</a>
         </div>
     {% endif %}
 {% endblock %}
